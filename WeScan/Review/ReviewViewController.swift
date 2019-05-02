@@ -116,11 +116,10 @@ final class ReviewViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func reloadImage() {
-        if enhancedImageIsAvailable, isCurrentlyDisplayingEnhancedImage {
-            imageView.image = results.enhancedImage?.rotated(by: rotationAngle) ?? results.enhancedImage
-        } else {
-            imageView.image = results.scannedImage.rotated(by: rotationAngle) ?? results.scannedImage
-        }
+		let rotationAngle = CGFloat(self.rotationAngle.value * Double.pi / 180)
+		UIView.animate(withDuration: 0.2) { [weak self] in
+			self?.imageView.transform = CGAffineTransform.init(rotationAngle: rotationAngle)
+		}
     }
     
     @objc func toggleEnhancedImage() {
